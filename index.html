@@ -5,17 +5,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Advanced grid demo</title>
+  <title>演示 Demo</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="demo.css" />
+  <link rel="stylesheet" href="./dist/demo.css" />
 
   <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/gridstack/dist/jquery-ui.min.js"></script>
-  <script src="node_modules/gridstack/dist/gridstack.min.js"></script>
-  <script src="node_modules/gridstack/dist/gridstack.jQueryUI.min.js"></script>
+  <script src="./dist/jquery.min.js"></script>
+  <script src="./dist/jquery-ui.min.js"></script>
+  <script src="./dist/gridstack.min.js"></script>
+  <script src="./dist/gridstack.jQueryUI.min.js"></script>
+  <script src="./dist/bootstrap.min.js"></script>
+  <script src="./dist/FileSaver.min.js"></script>
 
   <style type="text/css">
     .grid-stack-item-removing {
@@ -30,7 +32,7 @@
 </head>
 
 <body>
-  <h1>Advanced Demo</h1>
+  <h1>演示 Demo</h1>
   <div class="row">
     <div class="col-md-2 d-none d-md-block">
       <div id="trash" style="padding: 15px; margin-bottom: 15px;" class="text-center">
@@ -38,18 +40,29 @@
           <ion-icon name="trash" style="font-size: 400%"></ion-icon>
         </div>
         <div>
-          <span>Drop here to remove!</span>
+          <span>拖到这里删除！</span>
         </div>
       </div>
       <div class="newWidget grid-stack-item">
-        <div class="card-body grid-stack-item-content">
-          <div>
-            <ion-icon name="add-circle" style="font-size: 400%"></ion-icon>
-          </div>
-          <div>
-            <span>Drag me in into the dashboard!</span>
+        <div class="grid-stack-item-content">
+          <div class="card-body">
+            <div>
+              <ion-icon name="add-circle" style="font-size: 400%"></ion-icon>
+            </div>
+            <div>
+              <span>拖到右边添加！</span>
+            </div>
           </div>
         </div>
+      </div>
+      <div style="margin-top: 15px;">
+        <button id="preview" type="button" class="btn btn-info btn-lg btn-block">预览</button>
+      </div>
+      <div style="margin-top: 15px;">
+        <button id="cancel-preview" type="button" class="btn btn-light btn-lg btn-block" style="display: none;">取消预览</button>
+      </div>
+      <div style="margin-top: 15px;">
+        <button id="download" type="button" class="btn btn-info btn-lg btn-block">下载</button>
       </div>
     </div>
     <div class="col-sm-12 col-md-10">
@@ -91,6 +104,32 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title" id="settingModalLabel">设置</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="iframe-src" class="col-form-label">Iframe 地址:</label>
+                <input class="form-control" type="url" id="iframe-src" required>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">保存设置</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript">
     $(function () {
       var $grid = $('#advanced-grid');
@@ -121,8 +160,89 @@
         revert: 'invalid',
         scroll: false,
         appendTo: 'body',
-        helper: 'clone'
+        helper: 'clone',
       });
+
+      $('.grid-stack').on('dropped', function(event, previousWidget, newWidget) {
+        $('.grid-stack .grid-stack-item').each(function(index) {
+          let iframeSrc = $(this).data('iframe-src');
+          if (iframeSrc) {
+            $(this).find('.grid-stack-item-content').html(iframeSrc);
+          } else {
+            $(this).find('.grid-stack-item-content').html(index + 1);
+          }
+        });
+      });
+
+      $(".grid-stack").on("click", ".grid-stack-item", function() {
+        $(this).addClass('active');
+        let iframeSrc = $(this).data('iframe-src');
+        $('#settingModal input#iframe-src').val(iframeSrc);
+        $('#settingModal').modal('show');
+      })
+
+      $('form').on('submit', function(event) {
+        event.preventDefault();
+        let iframeSrc = $('#iframe-src').val();
+        $(".grid-stack .grid-stack-item.active").data('iframe-src', iframeSrc);
+        $(".grid-stack .grid-stack-item.active").find('.grid-stack-item-content').html(iframeSrc);
+        $('#settingModal').modal('hide');
+      })
+
+      $('#settingModal').on('hidden.bs.modal', function (e) {
+        $(".grid-stack .grid-stack-item.active").removeClass('active');
+      })
+
+      $('#preview').on("click", function() {
+        $(this).hide();
+        $('#cancel-preview').show();
+
+        $('.grid-stack .grid-stack-item').each(function() {
+          let iframeSrc = $(this).data('iframe-src');
+          if (iframeSrc) {
+            $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;'></iframe>");
+          }
+        });
+      })
+
+      $('#cancel-preview').on("click", function() {
+        $(this).hide();
+        $('#preview').show();
+
+        $('.grid-stack .grid-stack-item').each(function(index) {
+          let iframeSrc = $(this).data('iframe-src');
+          if (iframeSrc) {
+            $(this).find('.grid-stack-item-content').html(iframeSrc);
+          } else {
+            $(this).find('.grid-stack-item-content').html(index + 1);
+          }
+        });
+      })
+
+      $('#download').on("click", function() {
+        $('.grid-stack .grid-stack-item').each(function() {
+          let iframeSrc = $(this).data('iframe-src');
+          if (iframeSrc) {
+            $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;'></iframe>");
+          }
+        });
+        let html = '<html>';
+        html += '<head>';
+        html += $("head").html();
+        html += '</head>';
+        html += '<body>';
+        html += '<div class="col-sm-12 col-md-12">';
+        html += $('.grid-stack').parent().html();
+        html += '</div>';
+        html += '<srcipt src="./dist/demo.js"><\/script>';
+        html += '</body>';
+        html += '</html>';
+        var blob = new Blob(
+          [html],
+          { type: "text/plain;charset=utf-8" }
+        );
+        saveAs(blob, "demo.html");
+      })
     });
   </script>
 </body>
