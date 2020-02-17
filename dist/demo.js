@@ -22,11 +22,4 @@ $(function () {
       removeTimeout: 100,
       acceptWidgets: '.newWidget'
     });
-
-    $('.newWidget').draggable({
-      revert: 'invalid',
-      scroll: false,
-      appendTo: 'body',
-      helper: 'clone',
-    });
 });
