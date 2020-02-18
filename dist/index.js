@@ -31,6 +31,12 @@ $(function () {
     });
 
     $('.grid-stack').on('dropped', function(event, previousWidget, newWidget) {
+        let canvasSize = $(this).data('canvas-size');
+        if (canvasSize && $(this).css('height') > canvasSize) {
+            $('.grid-stack').data('gridstack').removeWidget($('.grid-stack').data('gridstack').container.children().last());
+            alert("超出画布大小, 不能添加");
+        }
+
         $('.grid-stack .grid-stack-item').each(function(index) {
         let iframeSrc = $(this).data('iframe-src');
         if (iframeSrc) {
@@ -49,7 +55,7 @@ $(function () {
         $('#settingModal').modal('show');
     })
 
-    $('form').on('submit', function(event) {
+    $('#settingModal form').on('submit', function(event) {
         event.preventDefault();
         let iframeSrc = $('#iframe-src').val();
         $(".grid-stack .grid-stack-item.active").data('iframe-src', iframeSrc);
@@ -62,6 +68,12 @@ $(function () {
     })
 
     // Global Setting
+    $('#globalSettingModal form').on('submit', function(event) {
+        event.preventDefault();
+        let canvasSize = $('#canvas-size').val();
+        $(".grid-stack").data('canvas-size', canvasSize);
+        $('#globalSettingModal').modal('hide');
+    })
 
 
     // Preview
