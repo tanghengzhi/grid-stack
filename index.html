@@ -56,6 +56,9 @@
         </div>
       </div>
       <div style="margin-top: 15px;">
+        <button id="global-setting" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#globalSettingModal">全局配置</button>
+      </div>
+      <div style="margin-top: 15px;">
         <button id="preview" type="button" class="btn btn-info btn-lg btn-block">预览</button>
       </div>
       <div style="margin-top: 15px;">
@@ -104,7 +107,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Setting Modal -->
   <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -130,121 +133,56 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    $(function () {
-      var $grid = $('#advanced-grid');
-      
-      $grid.on('added', function(e, items) { log(' added ', items) });
-      $grid.on('removed', function(e, items) { log(' removed ', items) });
-      $grid.on('change', function(e, items) { log(' change ', items) });
-      function log(type, items) {
-        if (!items) { return; }
-        var str = '';
-        for (let i=0; i<items.length && items[i]; i++) { str += ' (x,y)=' + items[i].x + ',' + items[i].y; }
-        console.log(type + items.length + ' items.' + str );
-      }
+  <!-- Global Setting Modal -->
+  <div class="modal fade" id="globalSettingModal" tabindex="-1" role="dialog" aria-labelledby="globalSettingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h5 class="modal-title" id="globalSettingModalLabel">全局配置</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="iframe-src" class="col-form-label">画布大小:</label>
+                <div class="input-group mb-3">
+                  <input type="text" value="460" class="form-control" placeholder="请设置画布大小" aria-label="请设置画布大小" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">px</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="iframe-src" class="col-form-label">元素间距:</label>
+                <div class="input-group mb-3">
+                  <input type="text" value="10" class="form-control" placeholder="请设置元素间距" aria-label="请设置元素间距" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">px</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="iframe-src" class="col-form-label">顶部显示:</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="请设置顶部显示" aria-label="请设置顶部显示" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">px</span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">保存设置</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-      $grid.gridstack({
-        alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        ),
-        resizable: {
-          handles: 'e, se, s, sw, w'
-        },
-        removable: '#trash',
-        removeTimeout: 100,
-        acceptWidgets: '.newWidget'
-      });
-
-      $('.newWidget').draggable({
-        revert: 'invalid',
-        scroll: false,
-        appendTo: 'body',
-        helper: 'clone',
-      });
-
-      $('.grid-stack').on('dropped', function(event, previousWidget, newWidget) {
-        $('.grid-stack .grid-stack-item').each(function(index) {
-          let iframeSrc = $(this).data('iframe-src');
-          if (iframeSrc) {
-            $(this).find('.grid-stack-item-content').html(iframeSrc);
-          } else {
-            $(this).find('.grid-stack-item-content').html(index + 1);
-          }
-        });
-      });
-
-      $(".grid-stack").on("click", ".grid-stack-item", function() {
-        $(this).addClass('active');
-        let iframeSrc = $(this).data('iframe-src');
-        $('#settingModal input#iframe-src').val(iframeSrc);
-        $('#settingModal').modal('show');
-      })
-
-      $('form').on('submit', function(event) {
-        event.preventDefault();
-        let iframeSrc = $('#iframe-src').val();
-        $(".grid-stack .grid-stack-item.active").data('iframe-src', iframeSrc);
-        $(".grid-stack .grid-stack-item.active").find('.grid-stack-item-content').html(iframeSrc);
-        $('#settingModal').modal('hide');
-      })
-
-      $('#settingModal').on('hidden.bs.modal', function (e) {
-        $(".grid-stack .grid-stack-item.active").removeClass('active');
-      })
-
-      $('#preview').on("click", function() {
-        $(this).hide();
-        $('#cancel-preview').show();
-
-        $('.grid-stack .grid-stack-item').each(function() {
-          let iframeSrc = $(this).data('iframe-src');
-          if (iframeSrc) {
-            $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;'></iframe>");
-          }
-        });
-      })
-
-      $('#cancel-preview').on("click", function() {
-        $(this).hide();
-        $('#preview').show();
-
-        $('.grid-stack .grid-stack-item').each(function(index) {
-          let iframeSrc = $(this).data('iframe-src');
-          if (iframeSrc) {
-            $(this).find('.grid-stack-item-content').html(iframeSrc);
-          } else {
-            $(this).find('.grid-stack-item-content').html(index + 1);
-          }
-        });
-      })
-
-      $('#download').on("click", function() {
-        $('.grid-stack .grid-stack-item').each(function() {
-          let iframeSrc = $(this).data('iframe-src');
-          if (iframeSrc) {
-            $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;'></iframe>");
-          }
-        });
-        let html = '<html>';
-        html += '<head>';
-        html += $("head").html();
-        html += '</head>';
-        html += '<body>';
-        html += '<div class="col-sm-12 col-md-12">';
-        html += $('.grid-stack').parent().html();
-        html += '</div>';
-        html += '<script src="http://tanghengzhi.com/grid-stack/dist/demo.js"><\/script>';
-        html += '</body>';
-        html += '</html>';
-        var blob = new Blob(
-          [html],
-          { type: "text/plain;charset=utf-8" }
-        );
-        saveAs(blob, "demo.html");
-      })
-    });
-  </script>
+  <script src="./dist/index.js"></script>
 </body>
 
 </html>
