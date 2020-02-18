@@ -71,7 +71,15 @@ $(function () {
     $('#globalSettingModal form').on('submit', function(event) {
         event.preventDefault();
         let canvasSize = $('#canvas-size').val();
-        $(".grid-stack").data('canvas-size', canvasSize);
+        if (canvasSize) {
+            $(".grid-stack").data('canvas-size', canvasSize);
+        }
+        let marginSize = $('#margin-size').val();
+        if (marginSize) {
+            $('.grid-stack').data('gridstack').verticalMargin(marginSize);
+            var sheet = window.document.styleSheets[3];
+            sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }');
+        }
         $('#globalSettingModal').modal('hide');
     })
 
