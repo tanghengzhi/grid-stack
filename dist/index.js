@@ -46,10 +46,25 @@ $(function () {
         });
     });
 
+    let rollback = false;
+    let rollbaclLock = false;
+
     $('.grid-stack').on('change', function(e, items) {
-        if (parseInt($(this).css('height')) > parseInt($('#canvas').css('height'))) {
+        if (rollbaclLock == false && parseInt($(this).css('height')) > parseInt($('#canvas').css('height'))) {
+            rollbaclLock = true;
+            $.each(rollback, function(i, item) {
+                $('.grid-stack').data('gridstack').update(item._gridstack_node.el, item.gsX, item.gsY, item.gsWidth, item.gsHeight);
+            })
+            rollbaclLock = false;
             alert("超出画布大小");
         }
+    });
+
+    $('.grid-stack').on('resizestart', function(event, ui) {
+        rollback = [];
+        $('.grid-stack').data('gridstack').container.children().each(function() {
+            rollback.push($(this).data());
+        });
     });
 
     // Setting
