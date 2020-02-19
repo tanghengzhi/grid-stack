@@ -80,6 +80,10 @@ $(function () {
             var sheet = window.document.styleSheets[3];
             sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }');
         }
+        let showOnTop = $('#show-on-top').val();
+        if (showOnTop) {
+            $('body h1').html(showOnTop);
+        }
         $('#globalSettingModal').modal('hide');
     })
 
@@ -124,6 +128,7 @@ $(function () {
         html += $("head").html();
         html += '</head>';
         html += '<body>';
+        html += '<h1>' + $("body h1").html() + '</h1>';
         html += '<div class="col-sm-12 col-md-12">';
         html += $('.grid-stack').parent().html();
         html += '</div>';
