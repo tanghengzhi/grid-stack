@@ -31,8 +31,7 @@ $(function () {
     });
 
     $('.grid-stack').on('dropped', function(event, previousWidget, newWidget) {
-        let canvasSize = $(this).data('canvas-size');
-        if (canvasSize && $(this).css('height') > canvasSize) {
+        if ($(this).css('height') > $('#canvas').css('height')) {
             $('.grid-stack').data('gridstack').removeWidget($('.grid-stack').data('gridstack').container.children().last());
             alert("超出画布大小, 不能添加");
         }
@@ -72,13 +71,14 @@ $(function () {
         event.preventDefault();
         let canvasSize = $('#canvas-size').val();
         if (canvasSize) {
-            $(".grid-stack").data('canvas-size', canvasSize);
+            $("#canvas").css('height', canvasSize);
         }
         let marginSize = $('#margin-size').val();
         if (marginSize) {
             $('.grid-stack').data('gridstack').verticalMargin(marginSize);
             var sheet = window.document.styleSheets[3];
-            sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }');
+            sheet.removeRule(2);
+            sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }', 2);
         }
         let showOnTop = $('#show-on-top').val();
         if (showOnTop) {
@@ -126,13 +126,20 @@ $(function () {
         let html = '<html>';
         html += '<head>';
         html += $("head").html();
+        html += '<style type="text/css">';
+        $.each(window.document.styleSheets[3].cssRules, function(i, cssRule) {
+            html += cssRule.cssText;
+        });
+        $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
+            html += cssRule.cssText;
+        });
+        html += '</style>';
         html += '</head>';
         html += '<body>';
         html += '<h1>' + $("body h1").html() + '</h1>';
         html += '<div class="col-sm-12 col-md-12">';
         html += $('.grid-stack').parent().html();
         html += '</div>';
-        html += '<script src="http://tanghengzhi.com/grid-stack/dist/demo.js"><\/script>';
         html += '</body>';
         html += '</html>';
         var blob = new Blob(

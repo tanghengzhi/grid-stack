@@ -28,6 +28,11 @@
     #trash {
       background: rgba(255, 0, 0, 0.4);
     }
+
+    .grid-stack>.grid-stack-item>.grid-stack-item-content {
+      left: 10px;
+      right: 10px;
+    }
   </style>
 </head>
 
@@ -69,6 +74,7 @@
       </div>
     </div>
     <div class="col-sm-12 col-md-10">
+      <div id="canvas" style="height: 660px;">
       <div class="grid-stack" id="advanced-grid" data-gs-animate="yes">
         <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2">
           <div class="grid-stack-item-content">1</div>
@@ -103,6 +109,7 @@
         <div class="grid-stack-item" data-gs-x="10" data-gs-y="4" data-gs-width="2" data-gs-height="2">
           <div class="grid-stack-item-content">11</div>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -148,7 +155,7 @@
               <div class="form-group">
                 <label for="iframe-src" class="col-form-label">画布大小:</label>
                 <div class="input-group mb-3">
-                  <input id="canvas-size" type="text" value="460" class="form-control" placeholder="请设置画布大小" aria-label="请设置画布大小" aria-describedby="basic-addon2">
+                  <input id="canvas-size" type="text" value="620" class="form-control" placeholder="请设置画布大小" aria-label="请设置画布大小" aria-describedby="basic-addon2">
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">px</span>
                   </div>
@@ -157,7 +164,7 @@
               <div class="form-group">
                 <label for="iframe-src" class="col-form-label">元素间距:</label>
                 <div class="input-group mb-3">
-                  <input id="margin-size" type="text" value="10" class="form-control" placeholder="请设置元素间距" aria-label="请设置元素间距" aria-describedby="basic-addon2">
+                  <input id="margin-size" type="text" value="20" class="form-control" placeholder="请设置元素间距" aria-label="请设置元素间距" aria-describedby="basic-addon2">
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">px</span>
                   </div>
@@ -165,7 +172,7 @@
               </div>
               <div class="form-group">
                 <label for="iframe-src" class="col-form-label">顶部显示:</label>
-                <input id="show-on-top" type="text" class="form-control" placeholder="请设置顶部显示内容" aria-label="请设置顶部显示内容" aria-describedby="basic-addon2">
+                <input id="show-on-top" type="text" value="演示Demo" class="form-control" placeholder="请设置顶部显示内容" aria-label="请设置顶部显示内容" aria-describedby="basic-addon2">
               </div>
           </div>
           <div class="modal-footer">
