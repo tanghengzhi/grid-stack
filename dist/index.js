@@ -118,10 +118,10 @@ $(function () {
     // Download
     $('#download').on("click", function() {
         $('.grid-stack .grid-stack-item').each(function() {
-        let iframeSrc = $(this).data('iframe-src');
-        if (iframeSrc) {
-            $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;' scrolling='no' frameborder='0></iframe>");
-        }
+            let iframeSrc = $(this).data('iframe-src');
+            if (iframeSrc) {
+                $(this).find('.grid-stack-item-content').html("<iframe src=" + iframeSrc + " style='width:100%; height: 100%;' scrolling='no' frameborder='0'></iframe>");
+            }
         });
         let html = '<html>';
         html += '<head>';
