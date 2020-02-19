@@ -31,9 +31,9 @@ $(function () {
     });
 
     $('.grid-stack').on('dropped', function(event, previousWidget, newWidget) {
-        if ($(this).css('height') > $('#canvas').css('height')) {
+        if (parseInt($(this).css('height')) > parseInt($('#canvas').css('height'))) {
             $('.grid-stack').data('gridstack').removeWidget($('.grid-stack').data('gridstack').container.children().last());
-            alert("超出画布大小, 不能添加");
+            alert("超出画布大小");
         }
 
         $('.grid-stack .grid-stack-item').each(function(index) {
@@ -44,6 +44,12 @@ $(function () {
             $(this).find('.grid-stack-item-content').html(index + 1);
         }
         });
+    });
+
+    $('.grid-stack').on('change', function(e, items) {
+        if (parseInt($(this).css('height')) > parseInt($('#canvas').css('height'))) {
+            alert("超出画布大小");
+        }
     });
 
     // Setting
