@@ -82,20 +82,28 @@ $(function () {
         let marginSize = $('#margin-size').val();
         if (marginSize) {
             $('.grid-stack').data('gridstack').verticalMargin(marginSize);
-            var sheet = window.document.styleSheets[3];
+            var sheet = window.document.styleSheets[4];
             sheet.removeRule(2);
             sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }', 2);
         }
         let showOnTop = $('input[name=inlineRadioOptions]:checked').val();
-        if (showOnTop == 'option2') {
-            $('#iframeModal').modal('show');
+        // if (showOnTop == 'option2') {
+        //     $('#iframeModal').modal('show');
+        // }
+        // if (showOnTop == 'option3') {
+        //     $('#timeModal').modal('show');
+        // }
+        if (showOnTop == 'option1') {
+            $('#time-float').hide();
         }
         if (showOnTop == 'option3') {
-            $('#timeModal').modal('show');
+            $('#time-float').show();
         }
         $('#globalSettingModal').modal('hide');
     })
 
+    $( ".draggable" ).draggable();
+    $( ".resizeable" ).resizable();
 
     // Preview
     $('#preview').on("click", function() {
@@ -134,12 +142,17 @@ $(function () {
         });
         let html = '<html>';
         html += '<head>';
-        html += $("head").html();
+        html +='<meta charset="utf-8">';
+        html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+        html += '<meta name="viewport" content="width=device-width, initial-scale=1">';
+        html += '<title>演示 Demo</title>';
+        html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">';
+        html += '<link rel="stylesheet" href="http://tanghengzhi.com/grid-stack/dist/demo.css"></link>';
         html += '<style type="text/css">';
-        $.each(window.document.styleSheets[3].cssRules, function(i, cssRule) {
+        $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
             html += cssRule.cssText;
         });
-        $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
+        $.each(window.document.styleSheets[5].cssRules, function(i, cssRule) {
             html += cssRule.cssText;
         });
         html += '</style>';

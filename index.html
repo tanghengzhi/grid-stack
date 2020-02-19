@@ -8,6 +8,7 @@
   <title>演示 Demo</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="http://tanghengzhi.com/grid-stack/dist/demo.css" />
 
   <script type="module" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.esm.js"></script>
@@ -75,41 +76,46 @@
     </div>
     <div class="col-sm-12 col-md-10">
       <div id="canvas" style="height: 460px;">
-      <div class="grid-stack" id="advanced-grid" data-gs-animate="yes">
-        <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2">
-          <div class="grid-stack-item-content">1</div>
+        <div class="grid-stack" id="advanced-grid" data-gs-animate="yes">
+          <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item-content">1</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4">
+            <div class="grid-stack-item-content">2</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="8" data-gs-y="0" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">3</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="10" data-gs-y="0" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">4</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">5</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="2" data-gs-y="2" data-gs-width="2" data-gs-height="4">
+            <div class="grid-stack-item-content">6</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="8" data-gs-y="2" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item-content">7</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">8</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="4" data-gs-y="4" data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item-content">9</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="8" data-gs-y="4" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">10</div>
+          </div>
+          <div class="grid-stack-item" data-gs-x="10" data-gs-y="4" data-gs-width="2" data-gs-height="2">
+            <div class="grid-stack-item-content">11</div>
+          </div>
         </div>
-        <div class="grid-stack-item" data-gs-x="4" data-gs-y="0" data-gs-width="4" data-gs-height="4">
-          <div class="grid-stack-item-content">2</div>
+        <div id="time-float" style="z-index: 999; position: fixed; top: 0px; display: none;">
+          <div class="draggable resizeable ui-widget-content">
+            <h1>2020-02-19 20:00:00</h1>
+          </div>
         </div>
-        <div class="grid-stack-item" data-gs-x="8" data-gs-y="0" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">3</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="10" data-gs-y="0" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">4</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="0" data-gs-y="2" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">5</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="2" data-gs-y="2" data-gs-width="2" data-gs-height="4">
-          <div class="grid-stack-item-content">6</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="8" data-gs-y="2" data-gs-width="4" data-gs-height="2">
-          <div class="grid-stack-item-content">7</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">8</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="4" data-gs-y="4" data-gs-width="4" data-gs-height="2">
-          <div class="grid-stack-item-content">9</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="8" data-gs-y="4" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">10</div>
-        </div>
-        <div class="grid-stack-item" data-gs-x="10" data-gs-y="4" data-gs-width="2" data-gs-height="2">
-          <div class="grid-stack-item-content">11</div>
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -176,10 +182,10 @@
                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
                   <label class="form-check-label" for="inlineRadio1">不显示</label>
                 </div>
-                <div class="form-check form-check-inline">
+                <!-- <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                   <label class="form-check-label" for="inlineRadio2">显示Iframe</label>
-                </div>
+                </div> -->
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
                   <label class="form-check-label" for="inlineRadio3">显示时间</label>
