@@ -171,8 +171,19 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="iframe-src" class="col-form-label">顶部显示:</label>
-                <input id="show-on-top" type="text" value="演示Demo" class="form-control" placeholder="请设置顶部显示内容" aria-label="请设置顶部显示内容" aria-describedby="basic-addon2">
+                <label for="iframe-src" class="col-form-label">顶层显示:</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                  <label class="form-check-label" for="inlineRadio1">不显示</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  <label class="form-check-label" for="inlineRadio2">显示Iframe</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                  <label class="form-check-label" for="inlineRadio3">显示时间</label>
+                </div>
               </div>
           </div>
           <div class="modal-footer">
@@ -181,6 +192,20 @@
           </div>
         </form>
       </div>
+    </div>
+  </div>
+
+  <!-- Iframe Modal -->
+  <div class="modal fade" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 1000px;height: 500px;">
+      <iframe src="https://cn.bing.com" style="width:100%;height: 100%;overflow: hidden;" scrolling="no" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <!-- Time Modal -->
+  <div class="modal fade" id="timeModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <h1>2020-02-19 12:00:00</h1>
     </div>
   </div>
 

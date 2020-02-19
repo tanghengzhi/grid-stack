@@ -80,9 +80,12 @@ $(function () {
             sheet.removeRule(2);
             sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }', 2);
         }
-        let showOnTop = $('#show-on-top').val();
-        if (showOnTop) {
-            $('body h1').html(showOnTop);
+        let showOnTop = $('input[name=inlineRadioOptions]:checked').val();
+        if (showOnTop == 'option2') {
+            $('#iframeModal').modal('show');
+        }
+        if (showOnTop == 'option3') {
+            $('#timeModal').modal('show');
         }
         $('#globalSettingModal').modal('hide');
     })
