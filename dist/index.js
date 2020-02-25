@@ -1,4 +1,6 @@
 $(function () {
+    const server = "http://tanghengzhi.com/grid-stack";
+
     var $grid = $('#advanced-grid');
 
     $grid.on('added', function(e, items) { log(' added ', items) });
@@ -162,7 +164,7 @@ $(function () {
         html += '<meta name="viewport" content="width=device-width, initial-scale=1">';
         html += '<title>演示 Demo</title>';
         html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">';
-        html += '<link rel="stylesheet" href="http://tanghengzhi.com/grid-stack/dist/demo.css"></link>';
+        html += '<link rel="stylesheet" href="' + server + '/dist/demo.css"></link>';
         html += '<style type="text/css">';
         $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
             html += cssRule.cssText;
