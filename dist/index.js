@@ -1,5 +1,5 @@
 $(function () {
-    const server = "http://tanghengzhi.com/grid-stack";
+    const server = "https://tanghengzhi.github.io/grid-stack";
 
     var $grid = $('#advanced-grid');
 
