@@ -99,7 +99,7 @@ $(function () {
         let marginSize = $('#margin-size').val();
         if (marginSize) {
             $('.grid-stack').data('gridstack').verticalMargin(marginSize);
-            var sheet = window.document.styleSheets[4];
+            var sheet = window.document.styleSheets[3];
             sheet.removeRule(2);
             sheet.insertRule('.grid-stack>.grid-stack-item>.grid-stack-item-content { left: ' + marginSize / 2 + 'px; right: ' + marginSize / 2 + 'px; }', 2);
         }
@@ -163,13 +163,13 @@ $(function () {
         html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
         html += '<meta name="viewport" content="width=device-width, initial-scale=1">';
         html += '<title>演示 Demo</title>';
-        html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">';
+        html += '<link rel="stylesheet" href="' + server + '/dist/bootstrap.min.css">';
         html += '<link rel="stylesheet" href="' + server + '/dist/demo.css"></link>';
         html += '<style type="text/css">';
-        $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
+        $.each(window.document.styleSheets[3].cssRules, function(i, cssRule) {
             html += cssRule.cssText;
         });
-        $.each(window.document.styleSheets[5].cssRules, function(i, cssRule) {
+        $.each(window.document.styleSheets[4].cssRules, function(i, cssRule) {
             html += cssRule.cssText;
         });
         html += '</style>';
