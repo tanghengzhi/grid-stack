@@ -22,7 +22,8 @@ $(function () {
         },
         removable: '#trash',
         removeTimeout: 100,
-        acceptWidgets: '.newWidget'
+        acceptWidgets: '.newWidget',
+        cellHeight: '5vh'
     });
 
     $('.newWidget').draggable({
@@ -94,7 +95,7 @@ $(function () {
         event.preventDefault();
         let canvasSize = $('#canvas-size').val();
         if (canvasSize) {
-            $("#canvas").css('height', canvasSize);
+            $("#canvas").css('height', canvasSize + "vh");
         }
         let marginSize = $('#margin-size').val();
         if (marginSize) {
